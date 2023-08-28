@@ -25,5 +25,5 @@ nouns_text = noun_extract(text)
 #KeyBert를 활용한 Keywords 추출
 model = BertModel.from_pretrained('skt/kobert-base-v1')
 kw_model = KeyBERT(model)
-keywords = kw_model.extract_keywords(nouns_text, keyphrase_ngram_range=(1, 2), stop_words=None, top_n=len(nouns))
+keywords = kw_model.extract_keywords(nouns_text, keyphrase_ngram_range=(1, 2), stop_words=None, top_n=10)
 keywords

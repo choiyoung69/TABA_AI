@@ -2,7 +2,7 @@
 
 import kss
 from konlpy.tag import Okt
-from textrank import KeywordSummarizer
+from textrank import KeysentenceSummarizer
 from konlpy.tag import Komoran
 
 komoran = Komoran()    
@@ -50,6 +50,6 @@ F 공익법인은 이사장 일가가 출자한 법인에 건물관리 업무를
 특수관계자 법인으로부터 돈을 빌린 뒤 시중 금리보다 더 많은 이자를 지급하거나 공익목적으로 출연한 토지에 공익법인 돈으로 사주 일가를 위한 고액의 개인 시설을 지은 사례도 있었다.
 
 국세청 관계자는 "공익법인은 영리법인과 달리 사업구조가 간단해서 세무조사를 하지 않아도 사후 검증으로도 사실관계를 확인할 수 있다"며 "검증만으로 사실관계 확인이 어려울 경우 세무조사를 의뢰할 수 있다"고 말했다.'''
-
+sents = kss.split_sentences(text)
 summary = getsummarize(text)
 summary
