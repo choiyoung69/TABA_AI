@@ -24,16 +24,16 @@ def DB_connect(input) :
             news_df = pd.read_sql("SELECT NEWS_ARTICLES.ID, NEWS_ARTICLES.TITLE, NEWS_ARTICLES.CONTENT \
                           FROM NEWS_ARTICLES \
                           LEFT JOIN NEWS_KEYWORDS ON NEWS_ARTICLES.ID = NEWS_KEYWORDS.ID \
-                          WHERE NEWS_KEYWORDS.ID IS NULL and (NEWS_ARTICLES.DATE >= '2023-08-23');", db_connection)
+                          WHERE NEWS_KEYWORDS.ID IS NULL and (NEWS_ARTICLES.DATE >= '2023-08-7' and NEWS_ARTICLES.DATE < '2023-08-9');", db_connection)
         elif input == 'summary' :
             news_df = pd.read_sql("SELECT NEWS_ARTICLES.ID, NEWS_ARTICLES.TITLE, NEWS_ARTICLES.CONTENT \
                           FROM NEWS_ARTICLES \
                           LEFT JOIN NEWS_SUMMARIES ON NEWS_ARTICLES.ID = NEWS_SUMMARIES.ID \
-                          WHERE NEWS_SUMMARIES.ID IS NULL and (NEWS_ARTICLES.DATE >= '2023-08-23');", db_connection)
+                          WHERE NEWS_SUMMARIES.ID IS NULL and (NEWS_ARTICLES.DATE >= '2023-08-7' and NEWS_ARTICLES.DATE < '2023-08-9');", db_connection)
     except pd.errors.DatabaseError : 
         news_df = pd.read_sql("SELECT ID, TITLE, CONTENT \
                           FROM NEWS_ARTICLES \
-                         WHERE (NEWS_ARTICLES.DATE >= '2023-08-23');", db_connection)
+                         WHERE (NEWS_ARTICLES.DATE >= '2023-08-7' and NEWS_ARTICLES.DATE < '2023-08-9');", db_connection)
     return news_df
 
 #형태소 분석 함수_keywords 추출 함수에서 사용
@@ -82,6 +82,9 @@ def getsummarize(txt):
 data = keywords_model()
 sdata = summary_model()
 
+data
+sdata
+
 #KeyBert를 활용한 Keywords 추출
 model = BertModel.from_pretrained('skt/kobert-base-v1')
 kw_model = KeyBERT(model)
@@ -112,8 +115,9 @@ for i in tqdm(range(len(sdata))):
     except ValueError:
         new_summary.loc[sdata.loc[i, 'ID']] = [sdata.loc[i, 'ID'], '']
 
+
 pd.set_option('display.max_colwidth', None)
-new_summary.to_csv("C:\TABA_AI.23_25.csv", index = None)
+new_summary.to_csv("C:\\TABA_AI.7_8.csv", index = None)
 
 #DB에 PUT
 db_connect_str = 'mysql+pymysql://tissue:tissue1234@tissue-app-backend-database.cyzh2s69rj9f.us-east-2.rds.amazonaws.com/tissue_db'
